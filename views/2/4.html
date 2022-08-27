@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../css/images/MJ.png">
+    
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>   
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="navbar.js" type="text/babel"></script>
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css"> 
+    <title>Calculator</title>
+</head>
+<style>
+    *{
+  margin:0;
+  padding:0;
+}
+html{
+  scroll-behaviour:smooth;
+}
+body{
+  background-color:#9E9E9E9a;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="28" height="49" viewBox="0 0 28 49"%3E%3Cg fill-rule="evenodd"%3E%3Cg id="hexagons" fill="%239C92AC" fill-opacity="0.4" fill-rule="nonzero"%3E%3Cpath d="M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+}
+.container{
+  border:2px solid black;
+  width:50%;
+  color:white;
+  margin:auto;
+  margin-top:15vh;
+  background-color:#2121219a;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr;
+  grid-template-rows:1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas:
+    "dis dis dis dis"
+    "AC C div times"
+    "seven eight nine minus"
+    "four five six plus"
+    "one two three equal"
+    "zero zero dot equal"
+    ;  
+}
+.padButton{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px 40px;
+  background-color:grey;
+  border:1px solid black;
+  cursor :pointer;
+  font-size:20px;
+}
+.padButton:hover{
+  border:1px solid white;
+  color:black;
+}
+.zero{grid-area:zero;}
+.equal{grid-area:equal; background-color:#1565C0;}
+.dot{grid-area:dot;}
+.dis{
+  grid-area:dis; 
+  text-align:right;
+  background:black;
+  font-size:20px;
+}
+
+.dg{background-color:#424242;}
+.red{background-color:#D32F2F;}
+
+.dis input{
+ width:100%;
+  text-align:right;
+  color:white;
+  background-color:transparent;
+  border:none;
+  font-size:20px;
+ }
+
+</style>
+<body>
+   <div id="root"></div> 
+<script type="text/babel">
+    function App(){
+  const [exp ,setExp] = React.useState(0);
+  const [answer, setAnswer] = React.useState(0)
+  
+  const display = (symbol) => {
+    setExp(prev => prev + symbol)
+  };
+  
+  const calc = () =>{
+    setAnswer(eval(exp))
+  };
+const allClear =()=>{
+  setExp("")
+  setAnswer("0")
+};  
+const clear =()=>{
+ setExp(prev => prev.split("").slice(0, prev.length - 1).join(""))
+setAnswer("0")
+};  
+
+  return (
+<div className="container">
+  <div className="grid">
+    <div id="display" className="dis">
+      <input type="text" value={exp} placeholder="0" disabled />
+      <span>{answer}</span>
+    </div>
+    <div onClick={allClear} id="clear" className="padButton AC red">AC</div>
+    <div onClick={clear} className="padButton C red">C</div>
+    <div onClick={() => display("/")} id="divide" className="padButton div">/</div>
+    <div onClick={() => display("*")} id="multiply" className="padButton times">X</div>
+    <div onClick={() => display("7")} id="seven" className="padButton seven dg">7</div>
+    <div onClick={() => display("8")} id="eight" className="padButton eight dg">8</div>
+    <div onClick={() => display("9")} id="nine" className="padButton nine dg">9</div>
+    <div onClick={() => display("-")} id="subtract" className="padButton minus">-</div>
+    <div onClick={() => display("4")} id="four" className="padButton four dg">4</div>
+    <div onClick={() => display("5")} id="five" className="padButton five dg">5</div>
+    <div onClick={() => display("6")} id="six" className="padButton six dg">6</div>
+    <div onClick={() => display("+")} id="add" className="padButton plus">+</div>
+    <div onClick={() => display("1")} id="one" className="padButton one dg">1</div>
+    <div onClick={() => display("2")} id="two" className="padButton two dg">2</div>
+    <div onClick={() => display("3")} id="three" className="padButton three dg">3</div>
+    <div onClick={calc} id="equals" className="padButton equal">=</div>
+    <div onClick={() => display("0")} id="zero" className="padButton zero dg">0</div>
+    <div onClick={() => display(".")} id="decimal" className="padButton dot dg">.</div>  
+  </div>
+</div>
+ );
+} 
+
+ReactDOM.render(<App />, document.getElementById("root"));
+</script> 
+</body>
+</html>
