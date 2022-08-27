@@ -8,7 +8,7 @@ const dns = require('dns');
 const urlparser = require('url')
 const multer = require('multer')
 
-
+const PORT = process.env.PORT || 5000
 const User = require('./exe.js').User
 const Exe = require('./exe.js').Exe
 const fs = require('fs');
@@ -297,6 +297,4 @@ if(req.params._id){
 
   
 
-app.listen(3000, 
-    console.log('server started 3000')
-);
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
