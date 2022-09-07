@@ -30,7 +30,7 @@ const urlSchema = mongoose.Schema({url : 'string'});
 const Url = mongoose.model('url', urlSchema);
 
 app.get('/', (req, res) => {
-    const welcome = 'https://next-js-opal-xi.vercel.app/ Follow This Link To Continue.'
+    const welcome = 'https://meheer.vercel.app/ Follow This Link To Continue.'
     res.json({welcome: welcome})
 })
 
